@@ -57,13 +57,6 @@ public class ItemData {
         }
     }
 
-    public ItemData(ItemData i) {
-        this.data = new ArrayList<>(i.data);
-        this.stared = new ArrayList<>(i.stared);
-        this.itemid = new ArrayList<>(i.itemid);
-        this.imgid = new ArrayList<>(i.imgid);
-    }
-
     public void remove(int pos) {
         data.remove(pos);
         stared.remove(pos);
@@ -80,9 +73,5 @@ public class ItemData {
 
     public int getIndex(int iid) {
         return itemid.indexOf(iid);
-    }
-
-    public int size() {
-        return data.size();
     }
 }
