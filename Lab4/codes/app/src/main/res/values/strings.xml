@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Lab4</string>
+    <string name="static_broadcast_action">top.alau.lab4.broadcast.STATIC</string>
+    <string name="dynamic_broadcast_action">top.alau.lab4.broadcast.DYNAMIC</string>
+</resources>
