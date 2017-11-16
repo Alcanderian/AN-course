@@ -200,18 +200,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-
-        try {
-            ib_binder.transact(3, null, null, 0);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        unbindService(serv_conn);
-        serv_conn = null;
-
         try {
             MainActivity.this.finish();
-            System.exit(0);
         } catch (Exception e) {
             e.printStackTrace();
         }
