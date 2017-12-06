@@ -13,6 +13,7 @@ public class MusicService extends Service {
 
     public static MediaPlayer mp = new MediaPlayer();
     public IBinder my_binder = new MusicBinder();
+    public static int state = 3;
 
     public MusicService() {
         try {
@@ -37,19 +38,24 @@ public class MusicService extends Service {
                 case 1: // start/pause
                     if (mp.isPlaying()) {
                         mp.pause();
-                        reply.writeInt(1);
+                        state = 1;
+                        reply.writeInt(state);
                     } else {
                         mp.start();
-                        reply.writeInt(2);
+                        state = 2;
+                        reply.writeInt(state);
                     }
                     break;
                 case 2: // stop
-                    if (mp != null) {
+                    if (mp != null && state != 0) {
                         mp.stop();
-                        reply.writeInt(0);
+                        state = 0;
+                        reply.writeInt(state);
                         try {
+                            mp.reset();
+                            mp.setDataSource(Environment.getExternalStorageDirectory() + "/melt.mp3");
                             mp.prepare();
-                            mp.seekTo(0);
+                            mp.setLooping(true);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -67,6 +73,9 @@ public class MusicService extends Service {
                     break;
                 case 6: // get max
                     reply.writeInt(mp.getDuration());
+                    break;
+                case 7:
+                    reply.writeInt(state);
                     break;
             }
             return super.onTransact(code, data, reply, flags);

@@ -87,7 +87,13 @@ public class MainActivity extends AppCompatActivity {
         btn_quit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                try {
+                    ib_binder.transact(3, null, null, 0);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 onDestroy();
+                System.exit(0);
             }
         });
 
@@ -147,12 +153,16 @@ public class MainActivity extends AppCompatActivity {
                 super.handleMessage(msg);
                 switch (msg.what) {
                     case 1:
-                        if(is_changing_pos == 0) {
+                        if (is_changing_pos == 0) {
                             try {
                                 Parcel reply = Parcel.obtain();
                                 ib_binder.transact(4, null, reply, 0);
                                 int position = reply.readInt();
                                 skb_pos.setProgress(position);
+                                reply = Parcel.obtain();
+                                ib_binder.transact(7, null, reply, 0);
+                                play_status = reply.readInt();
+                                refreshStatus();
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -224,6 +234,9 @@ public class MainActivity extends AppCompatActivity {
                 else
                     oa_collection.resume();
                 is_init = 0;
+                break;
+            case 3:
+                tv_status.setText("");
                 break;
         }
     }
