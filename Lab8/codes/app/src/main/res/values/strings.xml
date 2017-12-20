@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Contact</string>
+    <string name="db_name">my_contact.db</string>
+</resources>
